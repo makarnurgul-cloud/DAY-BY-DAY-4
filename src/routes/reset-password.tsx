@@ -1,0 +1,7 @@
+import { createFileRoute, Link } from '@tanstack/react-router';
+import { useEffect,useState,type FormEvent } from 'react';
+import { supabase } from '@/integrations/supabase/client';
+import { pageHead } from '@/lib/day';
+import { Button } from '@/components/ui/button';
+export const Route=createFileRoute('/reset-password')({head:()=>pageHead('Құпиясөзді жаңарту','Жеке кеңістігіңе қолжетімділікті қалпына келтір.'),component:Reset});
+function Reset(){const[valid,setValid]=useState(false);const[message,setMessage]=useState('');const[busy,setBusy]=useState(false);useEffect(()=>{setValid(new URLSearchParams(window.location.hash.slice(1)).get('type')==='recovery');},[]);async function submit(e:FormEvent<HTMLFormElement>){e.preventDefault();setBusy(true);const password=String(new FormData(e.currentTarget).get('password'));const r=await supabase.auth.updateUser({password});setMessage(r.error?'Сілтеменің мерзімі өтіп кетуі мүмкін. Жаңа сілтеме сұраңыз.':'Құпиясөз жаңартылды.');setBusy(false);}return <main className="reset-page"><section className="auth-form-panel"><h1>Құпиясөзді жаңарту</h1>{valid?<form className="auth-form" onSubmit={submit}><label>Жаңа құпиясөз<input type="password" name="password" minLength={6} required/></label><Button disabled={busy}>Сақтау</Button></form>:<p>Поштаңыздағы қалпына келтіру сілтемесін ашыңыз.</p>}<p role="status">{message}</p><Button variant="link" asChild><Link to="/auth">Кіру бетіне оралу</Link></Button></section></main>}
