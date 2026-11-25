@@ -81,6 +81,15 @@ export type Database = {
           },
         ]
       }
+      goal_progress_logs: {
+        Row: { goal_id: string; id: string; log_date: string; progress: number; user_id: string }
+        Insert: { goal_id: string; id?: string; log_date?: string; progress: number; user_id: string }
+        Update: { goal_id?: string; id?: string; log_date?: string; progress?: number; user_id?: string }
+        Relationships: [
+          { foreignKeyName: "goal_progress_logs_goal_id_fkey"; columns: ["goal_id"]; isOneToOne: false; referencedRelation: "goals"; referencedColumns: ["id"] },
+          { foreignKeyName: "goal_progress_logs_user_id_fkey"; columns: ["user_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] },
+        ]
+      }
       habit_logs: {
         Row: {
           habit_id: string
