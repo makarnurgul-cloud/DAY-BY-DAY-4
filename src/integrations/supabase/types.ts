@@ -52,6 +52,7 @@ export type Database = {
       goals: {
         Row: {
           created_at: string
+          goal_date: string
           id: string
           progress: number
           title: string
@@ -59,6 +60,7 @@ export type Database = {
         }
         Insert: {
           created_at?: string
+          goal_date?: string
           id?: string
           progress?: number
           title: string
@@ -66,6 +68,7 @@ export type Database = {
         }
         Update: {
           created_at?: string
+          goal_date?: string
           id?: string
           progress?: number
           title?: string
